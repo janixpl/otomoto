@@ -9,4 +9,4 @@ RUN .venv/bin/pip install -r requirements.txt
 COPY app /app/app
 COPY tests /app/tests
 
-CMD [".venv/bin/python", "my_proj.py"]
+CMD [".venv/bin/python", "app/my_proj.py"]
