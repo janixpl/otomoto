@@ -1,11 +1,7 @@
 import csv
 from playwright.sync_api import sync_playwright
 
-car_models = ['acura', 'aixam', 'alfa-romeo', 'aston-martin', 'audi', 'austin', 'autobianchi',
-              'bentley', 'bmw', 'brilliance', 'buick', 'cadillac', 'chatenet', 'chevrolet', 'chrysler', 'citroen',
-              'dacia', 'daewoo', 'daihatsu', 'dfsk', 'dkw', 'dodge', 'faw', 'ferrari', 'fiat', 'ford', 'gaz',
-              'gmc', 'grecav', 'holden', 'honda', 'hummer', 'hyundai', 'infiniti', 'isuzu', 'iveco', 'jaguar',
-              'jeep', 'kia', 'lada', 'lamborghini', 'lancia', 'land-rover', 'lexus', 'ligier', 'lincoln',
+car_models = ['lexus', 'ligier', 'lincoln',
               'lotus', 'lti', 'maserati', 'maybach', 'mazda', 'mclaren', 'mercedes-benz', 'mercury', 'mg', 'microcar',
               'mini', 'mitsubishi', 'nissan', 'nysa', 'oldsmobile', 'opel', 'peugeot', 'piaggio', 'plymouth',
               'polonez', 'pontiac', 'porsche', 'renault', 'rolls-royce', 'rover', 'saab', 'saturn', 'seat',
@@ -25,9 +21,9 @@ def initialize_browser():
 
 # Funkcja do inicjalizacji pliku CSV
 def initialize_csv(file_path, fieldnames):
-    file = open(file_path, mode='w', newline='', encoding='utf-8')
+    file = open(file_path, mode='a', newline='', encoding='utf-8')
     writer = csv.DictWriter(file, fieldnames=fieldnames)
-    writer.writeheader()
+    # writer.writeheader()
     return file, writer
 
 
@@ -112,7 +108,7 @@ def collect_data_to_csv():
                   'color', 'gearbox', 'engine_capacity', 'engine_power', 'transmission',
                   'fuel_type', 'body_type', 'new_used', 'mileage', 'no_accident',
                   'country_origin', 'has_registration', 'registered', 'price']
-    file, writer = initialize_csv('data/otomoto_data.csv', fieldnames)
+    file, writer = initialize_csv('otomoto_data.csv', fieldnames)
 
     try:
         # Iteracja przez modele samochodów
