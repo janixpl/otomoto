@@ -1,12 +1,17 @@
-FROM arm64v8/ubuntu
+FROM arm64v8/python:3.12
 
 RUN apt update && apt -y upgrade && apt -y install python3 python3-venv
 WORKDIR /app
-COPY requirements.txt /app
-RUN python3 -m venv .venv
-RUN .venv/bin/pip install -r requirements.txt
+COPY requirements.txt .
+RUN python3 -m venv /app/.venv && \
+    /app/.venv/bin/pip install --no-cache-dir --upgrade pip && \
+    /app/.venv/bin/pip install --no-cache-dir -r requirements.txt
 
-COPY app /app/app
-COPY tests /app/tests
+COPY app .
+COPY data ./data
+COPY tests ./tests
 
-CMD [".venv/bin/python", "appmy_proj.py"]
+EXPOSE 5001
+ENV PATH="/app/.venv/bin:$PATH"
+
+CMD ["python3", "my_proj.py"]
