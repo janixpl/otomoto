@@ -37,9 +37,6 @@ for col in categorical_columns:
     le = LabelEncoder()
     data[col] = le.fit_transform(data[col].astype(str))  # Upewniamy się, że kolumny są traktowane jako tekst
 
-print(data.head())
-print(data.dtypes)
-
 # Przygotowanie danych
 X = data[['car_model', 'year', 'model', 'version', 'door_count',
             'color', 'gearbox', 'engine_capacity', 'engine_power', 'transmission',
@@ -95,3 +92,13 @@ with mlflow.start_run():  # Rozpoczyna nowy eksperyment (run)
     data.to_csv(data_filename, index=False)
     
     print(f"RMSE: {rmse}")
+
+mlflow_tracking_uri = "sqlite:///mlflow.db"
+
+# Uruchomienie MLflow UI
+try:
+    print("Uruchamianie MLflow UI...")
+    os.system(f"mlflow ui --backend-store-uri {mlflow_tracking_uri} --default-artifact-root {output_path} --host 0.0.0.0 --port 5001")
+    print("MLflow UI jest dostępne pod adresem: http://localhost:5001")
+except Exception as e:
+    print(f"Nie udało się uruchomić MLflow UI: {e}")
